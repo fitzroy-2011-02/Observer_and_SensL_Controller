@@ -364,7 +364,7 @@ class Hardware:
                 self.sumSignalArray.append(sumSig)
                 
                 # wait a short time for other actions
-                time.sleep(0.05)
+                time.sleep(0.01)
             
             if( ULStat == 0 and self.stopSignalCollection.isSet() == 1 ):
                 

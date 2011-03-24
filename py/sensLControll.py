@@ -130,7 +130,7 @@ class Hardware:
     Functionality to control Meilhaus I/O-Card
     '''
     
-    def __init__( self, boardNumber = 1, lowChan = 0, highChan = 1, counts = 50, rate = SAMPLE_RATE,  fileNamePath = ".\\data\\raw\\" ):
+    def __init__( self, boardNumber = 0, lowChan = 0, highChan = 1, counts = 50, rate = SAMPLE_RATE,  fileNamePath = ".\\data\\raw\\" ):
         '''
         Initialize meilhaus class
 
@@ -453,7 +453,7 @@ class Hardware:
                     returnValue = (0, newFileName)
                                     
             else:
-                returnValue = (1, "An error in the sensor function calls occured")
+                returnValue = (1, "An eroro in the Sensor function calls occured")
  
             return returnValue
         

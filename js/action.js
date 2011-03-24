@@ -45,8 +45,8 @@ $(document).ready(function() {
 		$.post('/cCOM',
 			{ "comPort":"0" },
 			function(res) {
-				res.resMic = 1;
-				res.resSAPD = 1; 
+				//res.resMic = 1;
+				//res.resSAPD = 1; 
 				if( (res.resMic != "0") && (res.resSAPD != "0" ))
 				{
 					// now show the controll elements
@@ -176,25 +176,29 @@ $(document).ready(function() {
 						function(res) {
 								logLine = stopString + " returns: " + res.res;
 								writeLog(logLine, "output");
-								
-								// save data, generate HTML Page and reset old velocity
-								fileName = $("#inputFileName").val();
-				
-								writeLog( "Stop SensL APD", "input" );
-								$.post('/stopSensLAPD',
-									{"fileName": fileName},
-									function(res)
-									{
-										logLine = "Stop SensL APD returns: " + res.res;
-										writeLog( logLine , "output" );
-										if( res.error == "0" ){
-											htmlPageURL = res.res;
-											window.open( htmlPageURL,'_newtab' );
-										}
-									},
-									'json'
-								);
-								
+
+                
+                                if( $("#sensLSelectBUT_ON").hasClass("sensLSelectBUT_check") )
+                                {								
+                                    // save data, generate HTML Page and reset old velocity
+                                    fileName = $("#inputFileName").val();
+                    
+                                    writeLog( "Stop SensL APD", "input" );
+                                    $.post('/stopSensLAPD',
+                                        {"fileName": fileName},
+                                        function(res)
+                                        {
+                                            logLine = "Stop SensL APD returns: " + res.res;
+                                            writeLog( logLine , "output" );
+                                            if( res.error == "0" ){
+                                                htmlPageURL = res.res;
+                                                window.open( htmlPageURL,'_newtab' );
+                                            }
+                                        },
+                                        'json'
+                                    );
+								}
+                                
 								writeLog( oldVelCall, "input" );
 								$.post('/callCMD',
 										{ "callString": oldVelCall },
@@ -263,23 +267,28 @@ $(document).ready(function() {
     		$("#startDIV").toggleClass("startMove");
             $("#startDIV").toggleClass("stopMove");            
 
-			//all moves done, now reset velocity and stop sensor
-			fileName = $("#inputFileName").val();
-			
-			writeLog( "Stop SensL APD", "input" );
-			$.post('/stopSensLAPD',
-				{"fileName": fileName},
-				function(res)
-				{
-					logLine = "Stop SensL APD returns: " + res.res;
-					writeLog( logLine , "output" );
-					if( res.error == "0" ){
-						htmlPageURL = res.res;
-						window.open( htmlPageURL,'_newtab' );
-					}
-				},
-				'json'
-            );
+            if( $("#sensLSelectBUT_ON").hasClass("sensLSelectBUT_check") )
+            {
+
+                //all moves done, now reset velocity and stop sensor
+                fileName = $("#inputFileName").val();
+                
+                writeLog( "Stop SensL APD", "input" );
+                $.post('/stopSensLAPD',
+                    {"fileName": fileName},
+                    function(res)
+                    {
+                        logLine = "Stop SensL APD returns: " + res.res;
+                        writeLog( logLine , "output" );
+                        if( res.error == "0" ){
+                            htmlPageURL = res.res;
+                            window.open( htmlPageURL,'_newtab' );
+                        }
+                    },
+                    'json'
+                );
+            }
+                
 			
 			writeLog( oldVelCall, "input" );
 			$.post('/callCMD',

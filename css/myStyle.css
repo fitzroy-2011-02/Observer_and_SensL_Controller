@@ -1,0 +1,241 @@
+.ui-widget{
+				font-size: 1em;
+}
+
+@font-face {
+				font-family: Days;
+				src: url('../fonts/Days.otf');
+}
+
+body{
+				background-color:	#898989;
+}
+#mainDIV{
+				position:					absolute;
+				width: 						600px;
+				height:						500px;
+}
+#connectScreen{
+				position:					absolute;
+				width:						594px;
+				height: 					193px;
+				background-color: #66a859;
+				border:						3px solid white;
+				font-family: 			Days;
+				text-align:				center;
+				padding-top:			145px;
+				z-index:					1;
+}
+
+#tabs-1, #tabs-2, #tabs-3{
+				height:	260px;
+}
+#elementDIV{
+				float: 						left;
+				width: 						350px;
+}
+
+
+
+#sensorConfigBackDIV{
+				border:	1px solid #898989;
+				width:	350px;
+				padding-top:		5px;
+				padding-bottom: 5px;
+				padding-left:		5px;
+}
+#sensorConfigTable{
+}
+.sensorConfigTR{
+				height:						30px;
+}
+#sensLSelectBUT_ON, #sensLSelectBUT_OFF {
+				width:  					40px;
+				height: 					21px;
+				text-align:				center;
+				background-color:	#a7a7a7;
+				color:						white;
+				font-family:			Days;
+				float:						left;
+}
+.spacerDIV{
+				width: 120px;
+				float:	right;
+}
+#sensLSelectBUT_ON:hover, #sensLSelectBUT_OFF:hover {
+				background-color:	#98EF86 !important;
+}
+.sensLSelectBUT_check{
+				background-color:	#66a859 !important;
+}
+.inputFileName{
+				text-align:right;
+				width:180px;
+}
+
+
+#mikDIV{
+				border:					1px solid #898989;
+				margin-top: 		5px;
+				padding-top:		5px;
+				padding-bottom: 5px;
+				padding-left:		5px;
+				width:					350px;
+}
+#elementTable{
+
+}
+.eleTR{
+				height:	30px;
+}
+.eleLabel{		
+				background-color:	#a7a7a7;
+				font-family: 			Days;
+				font-size:				medium;
+				color:						white;
+				height: 					21px;
+				padding-left: 		4px;
+				padding-top: 			1px;
+				padding-right: 		4px;
+				width: 						140px;
+}
+.inputEle{
+				text-align:	right;
+				width:			50px;
+}
+.tdInput{
+				width:	195px;
+}
+.tdLabel{
+				alignment-adjust: left;
+}
+
+
+.dirBut{
+				width:  					23px;
+				height: 					21px;
+				text-align:				center;
+				background-color:	#a7a7a7;
+				color:						white;
+				font-family:			Days;
+}
+.dirBut:hover{
+				background-color:	#98EF86;				
+}
+.butSelected{
+				background-color:	#66a859;
+}
+
+
+
+#startDIV{
+				float: 						left;
+				width: 						150px;
+				height: 					147px;
+				margin-right: 		5px;
+				margin-left:			15px;
+				background-color:	white;
+				font-family:			Days;
+				font-size:				xx-large;
+				text-align:				center;
+				padding-top:			100px;
+				border:						1px solid #898989;
+}
+#startDIV:hover{
+				background-color:	#98EF86;
+}
+.startMove{
+				/*background-image: url(./arrow.png);*/
+				background-color:	#66a859 !important;
+}
+.stopMove{
+				/*background-image: url(./circle.png);*/
+				background-color:	white;
+}
+
+
+
+#customCMD{
+				float: 					left;
+				width:					495px;
+				height:					227px;
+				padding-top:		10px;
+				padding-left:		10px;
+				padding-right:	10px;
+				padding-bottom: 10px;
+				border:					1px solid #898989;
+}
+#inputCMD{
+				width: 410px;
+				height:	30px;
+}
+#execCMD{
+				float:	right;
+}
+#logArea{
+				padding-right:		3px;
+				height:						185px;
+				margin-left:			1px;
+				margin-top:				3px;
+				margin-bottom:		3px;
+				background-color: white;
+				overflow:					scroll;
+				font-size:				small;
+}
+
+
+
+#startSensL{
+				float: 					left;
+				width:					505px;
+				padding:				5px;
+				border:					1px solid #898989;
+}
+#startSensLTable{
+				padding-top: 			3px;
+				float:						left;
+
+}
+#startSensLFileName{
+				margin-right:	10px;
+}
+#startSensLBUT{
+				background-color: white;
+				border: 1px solid #898989;
+				float: right;
+				font-family: Days;
+				font-size: x-large;
+				height: 50px;
+				margin-left: 389px;
+				margin-top: -6px;
+				padding-top: 21px;
+				position: absolute;
+				text-align: center;
+				width: 120px;
+}
+#startSensLBUT:hover{
+				background-color:	#98EF86;
+}
+.startSensLBUT_select{
+				background-color:	#66a859 !important;
+}
+
+
+#showResult{
+				border: 1px solid #898989;
+				float: left;
+				margin-left: 0;
+				margin-top: 15px;
+				padding-bottom: 10px;
+				padding-top: 10px;
+				text-align: center;
+				width: 515px;
+}
+#inputPlotFileName{
+				width:	250px;
+				height:	30px;
+}
+
+
+
+

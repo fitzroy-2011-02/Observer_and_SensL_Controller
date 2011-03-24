@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus SVG 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
+	<head>
+		<script type="text/javascript" src="./js/jquery-1.4.4.js"></script>
+		<script type="text/javascript" src="./js/jquery.alphanumeric.js"></script>
+		<script type="text/javascript" src="./js/jquery.corner.js"></script>
+		
+		<link type="text/css" href="./css/smoothness/jquery-ui-1.8.10.custom.css" rel="Stylesheet" />
+		<script type="text/javascript" src="./js/jquery-ui-1.8.10.custom.min.js"></script>		
+		
+		<script type="text/javascript" src="./js/dygraph.js"></script>
+		
+		<!-- here is my css and js code -->
+		<script type="text/javascript" src="./js/action.js" language="javascript"></script>
+		<link rel="stylesheet" type="text/css" href="./css/myStyle.css"></link>
+		
+	</head>
+    <body>
+    	<div 	id="mainDIV">
+						<div 	id="connectScreen">
+									<p 	id="connectString">
+											CONNECT
+									</p>
+						</div>
+						
+			<div 	id="tabs">
+						<ul>
+								<li><a href="#tabs-1">Mikroskop und Sensor</a></li>
+								<li><a href="#tabs-2">Mikroskop</a></li>
+								<li><a href="#tabs-3">Sensor</a></li>
+						</ul>
+						<div 	id="tabs-1">
+									<div 	id="elementDIV">
+									<div 	id=   "sensorConfigBackDIV"
+												class="sensorConfigBackDIV_OFF">
+												
+												<table 	id="sensorConfigTable">
+																
+																<tr class="sensorConfigTR">
+																		<td class="sensorConfigTD">
+																				<div 	id=		"sensLSelectBUT"
+																							class="eleLabel">
+																							SensL APD
+																				</div>
+																	</td>
+																	<td class="tdInput">
+																				<div 	id=		"sensLSelectBUT_ON"
+																							class="eleLabel sensLSelectBUT sensLSelectBUT_check">
+																							ON
+																				</div>
+																	</td>
+																	<td class="tdInput">
+																				<div 	id=		"sensLSelectBUT_OFF"
+																							class="eleLabel sensLSelectBUT">
+																							OFF
+																				</div>
+																				<div class="spacerDIV"></div>
+																	</td>
+																</tr>
+																
+																<tr>
+																	<td class="sensorConfigTD">
+																		<div 	class="eleLabel">
+																					Belichtungszeit [ms]
+																		</div>
+																	</td>
+																	<td
+																			class="tdInput sensorConfigTD">
+																			<input 	value=""
+																							id=		"inputFrequenz"
+																							type=	"text"
+																							class="inputEle">
+																			</input>
+																	</td>
+																</tr>
+																
+																<tr>
+																	<td class="sensorConfigTD">
+																		<div 	class="eleLabel">
+																					Filename
+																		</div>
+																	</td>
+																	<td	colspan="2"
+																			class="tdInput sensorConfigTD">
+																			<input 	value=""
+																							id=		"inputFileName"
+																							type=	"text"
+																							class="inputFileName">
+																			</input>
+																	</td>
+																</tr>
+																
+												</table>
+												
+									</div>
+									
+									<div 	id="mikDIV">
+												<table 	id="elementTable">	
+																<tr class="eleTR">
+																		<td class="tdLabel">
+																				<div 	class="eleLabel">
+																							Velocity [mm/s]
+																				</div>
+																		</td>
+																		<td class="tdInput">
+																				<input 	value=""
+																								id=		"inputVel"
+																								type=	"text"
+																								class="inputEle">
+																				</input>
+																		</td>
+																</tr>
+																<tr class="eleTR">
+																		<td class="tdLabel">
+																				<div 	class="eleLabel">
+																							Distance [um]
+																				</div>
+																		</td>
+																		<td class="tdInput">
+																				<input	id=		"inputDist"
+																								value="700"
+																								type=	"text"
+																								class="inputEle">
+																				</input>
+																		</td>
+																</tr>
+																<tr class="eleTR">
+																		<td class="tdLabel">
+																				<div 	class="eleLabel">
+																							Cycles
+																				</div>
+																		</td>
+																		<td class="tdInput">
+																				<input 	id=		"inputCycle"
+																								value="1"
+																								type=	"text"
+																								class="inputEle">
+																				</input>
+																		</td>
+																</tr>
+																<tr	class="eleTR"
+																		>
+																		<td>
+																				<div 	class="eleLabel">
+																							Direction
+																				</div>
+																		</td>
+																	<td>
+																			<div 	id=		"dirHoriz"
+																						class="dirBut butSelected"
+																						style="float:left">
+																						H
+																			</div>
+																			<div 	style="float:left; margin-left:8px"
+																						id=		"dirVert"
+																						class="dirBut">
+																						V
+																			</div>
+																	</td>
+																</tr>
+												</table>
+									</div>
+									</div>
+					
+									<div 	id=		"startDIV"
+												class="stopMove">
+												GO
+									</div>
+						</div>
+						
+						<div 	id="tabs-2">
+									<div 	id="customCMD">
+												<div 	id="cmdLine">
+															<input	id=		"inputCMD"
+																			type=	"text">
+															</input>
+															<button id=		"execCMD"
+																			type=	"button">
+																			EXEC
+															</button>
+												</div>
+												<div 	id="logArea">
+												</div>
+									</div>
+						</div>
+						
+						<div 	id="tabs-3">
+									<div 	id="startSensL">
+												<table 	id="startSensLTable">
+																<tr>
+																	<td class="sensorConfigTD">
+																		<div 	class="eleLabel">
+																					Belichtungszeit [ms]
+																		</div>
+																	</td>
+																	<td	class="tdInput sensorConfigTD">
+																			<input 	value=""
+																							id=		"startSensLFrequenz"
+																							type=	"text"
+																							class="inputEle">
+																			</input>
+																	</td>
+																</tr>
+																
+																<tr>
+																	<td class="sensorConfigTD">
+																		<div 	class="eleLabel">
+																					Filename
+																		</div>
+																	</td>
+																	<td	class="tdInput sensorConfigTD">
+																			<input 	value=""
+																							id=		"startSensLFileName"
+																							type=	"text"
+																							class="inputFileName">
+																			</input>
+																	</td>
+																</tr>																									
+												</table>
+												<div 	id=		"startSensLBUT"
+															class="sensLOFF">
+															START
+												</div>
+									</div>
+		
+									<div 	id="showResult">
+												<input 	id=		"inputPlotFileName"
+																value=""
+																type=	"text">
+												</input>
+												<button id=		"showResultBut"
+																type=	"button">
+																CREATE HTML PAGE
+												</button>
+									</div>				
+						
+						</div>
+					</div>
+			</div>
+
+			
+			
+			
+			
+    </body>
+</html>

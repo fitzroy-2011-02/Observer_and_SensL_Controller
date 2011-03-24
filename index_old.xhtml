@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus SVG 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
+	<head>
+		<script type="text/javascript" src="./js/jquery-1.4.4.js"></script>
+		<script type="text/javascript" src="./js/jquery.alphanumeric.js"></script>
+		<script type="text/javascript" src="./js/jquery.corner.js"></script>
+		
+		<script type="text/javascript" src="./js/dygraph.js"></script>
+		
+		<script type="text/javascript" src="./niceforms/niceforms.js"></script>
+		<link rel="stylesheet" type="text/css" href="./niceforms/niceforms-default.css"></link>
+		
+		<!-- here is my css and js code -->
+		<script type="text/javascript" src="action.js" language="javascript"></script>
+		<link rel="stylesheet" type="text/css" href="myStyle.css"></link>
+		
+	</head>
+    <body>
+    	<div 	id="mainDIV"
+						>
+						<div 	id="connectScreen"
+									>
+									<p 	id="connectString"
+											>
+											CONNECT
+									</p>
+						</div>
+						
+						<div 	id="elementDIV"
+									>
+									<form action="nothing.pl"
+												method="post"
+												class="niceform"
+												>
+												<fieldset class="moveParamFS"
+																	>
+																	<legend>
+																		Move Parameter
+																	</legend>
+																	<dl>
+																		<dt>
+																			<label 	for="velocity"
+																							>
+																							Velocity [mm/s]:
+																			</label>
+																		</dt>
+																		<dd>
+																			<input 	type=	"text"
+																							name=	"velocty"
+																							id=		"inputVel"
+																							size=	"2"
+																							value="6.43"
+																							>
+																			</input>
+																		</dd>
+																	</dl>
+																	
+																	<dl>
+																		<dt>
+																			<label 	for="distance"
+																							>
+																							Distance [um]:
+																			</label>
+																		</dt>
+																		<dd>
+																			<input 	type=	"text"
+																							name=	"distance"
+																							id=		"inputDist"
+																							size=	"2"
+																							value="700"
+																							>
+																			</input>
+																		</dd>
+																	</dl>
+																	
+																	<dl>
+																		<dt>
+																			<label 	for="cycles"
+																							>
+																							Cycles:
+																			</label>
+																		</dt>
+																		<dd>
+																			<input 	type=	"text"
+																							name=	"cycles"
+																							id=		"inputCycle"
+																							size=	"2"
+																							value="1"
+																							>
+																			</input>
+																		</dd>
+																	</dl>
+																	
+																	<dl>
+																		<dt>
+																			<label 	for="direction"
+																							>
+																							Direction:
+																			</label>
+																		</dt>
+																		<dd>
+																			<select size=	"1"
+																							name=	"direction"
+																							id=		"gender"
+																							>
+																						<option value="horizontal"
+																										>
+																										horizontal
+																						</option>
+																						<option value="vertical"
+																										>
+																										vertikal
+																						</option>
+																			</select>
+																		</dd>
+																	</dl>
+
+																	
+												</fieldset>
+										<!-- hier folgen die Formularelemente -->
+									</form>
+							</div>
+							<!--
+
+							
+						</div>
+    		<div 	id="startDIV"
+							class="startMove"
+							>
+    		</div>
+    		<div 	id="customCMD"
+							>
+							<div 	id="cmdLine"
+										>
+										<input	id=		"inputCMD"
+														type=	"text"
+														>
+										</input>
+										<button id=		"execCMD"
+														type=	"button"
+														>
+														EXEC
+										</button>
+							</div>
+							<div 	id="logArea"
+										>
+							</div>
+    		</div>
+				<div 	id="showResult"
+							>
+							<button id=		"showResultBut"
+											type=	"button"
+											>
+											SHOW
+							</button>
+				</div>
+				-->
+			</div>
+    </body>
+</html>

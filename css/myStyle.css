@@ -236,6 +236,57 @@ body{
 				height:	30px;
 }
 
+#startSensLZStapel{
+				float: 					left;
+				width:					356px;
+				padding:				5px;
+				border:					1px solid #898989;
+				margin-top:			15px;
+}
+
+#startSensLZStapelTable{
+				padding-top: 			3px;
+				float:						left;
+
+}
+
+#startSensLZStapelBUT{
+				background-color: white;
+				border: 1px solid #898989;
+				float: right;
+				font-family: Days;
+				font-size: x-large;
+				height: 50px;
+				margin-left: 240px;
+				margin-top: -6px;
+				padding-top: 21px;
+				position: absolute;
+				text-align: center;
+				width: 120px;
+}
+#startSensLZStapelBUT:hover{
+				background-color:	#98EF86;
+}
+.startSensLZStapelBUT_select{
+				background-color:	#66a859 !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

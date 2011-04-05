@@ -23,6 +23,8 @@ $(document).ready(function() {
 	$("#mikDIV").corner("5px");
 	
 	$("#startSensL").corner("5px");
+	$("#startSensLZStapel").corner("5px");
+	$("#startSensLZStapelBUT").corner("5px");
 	
 	// set default input values
 	$("#inputFrequenz").val("100");
@@ -35,6 +37,11 @@ $(document).ready(function() {
 	$("#startSensLFrequenz").val("100");
 	$("#startSensLFileName").val("testSensor");
 	
+	$("#startSensLZStapelZWeg").val("10");
+	$("#startSensLZStapelFrequenz").val("1000");
+	
+	
+	
 	
 	
 	/* ----------------------------------
@@ -45,8 +52,8 @@ $(document).ready(function() {
 		$.post('/cCOM',
 			{ "comPort":"0" },
 			function(res) {
-				//res.resMic = 1;
-				//res.resSAPD = 1; 
+				res.resMic = 1;
+				res.resSAPD = 1; 
 				if( (res.resMic != "0") && (res.resSAPD != "0" ))
 				{
 					// now show the controll elements
@@ -456,4 +463,47 @@ $(document).ready(function() {
 	});
 	
 	// -------------------------------------------------------
+	
+	/* ------------------------------------------------------
+	call python: 	move z axes to find focus position
+	------------------------------------------------------ */
+	$("##startSensLZStapelBUT").bind("click", function()
+	{
+		
+		// stop search
+		if( $("#startSensLZStapelBUT").hasClass("startSensLZStapelBUT_select") )
+		{
+			
+		}
+		// start search
+		else
+		{
+			// change text of the button
+			$("#startSensLZStapelBUT").toggleClass("startSensLZStapelBUT_select");
+			$("#startSensLZStapelBUT").html("STOP");
+			
+			// get parameter
+			zdist = 	$("#startSensLZStapelZWeg").val();
+			expTime = $("#startSensLZStapelFrequenz").val();
+			
+			writeLog( "Start search Z focus", "input" );
+			$.post('/startSensLZStapel',
+						{ "zdist": 	zdist,
+							"expTime":expTime },
+						function(res)
+						{
+							logLine = "Start search Z focus returns: " + res.res;
+							writeLog(logLine, "output" );
+						},
+						'json'
+			);
+		}
+		
+		
+		
+		
+	});
+	
+	// -------------------------------------------------------
+	
 });	

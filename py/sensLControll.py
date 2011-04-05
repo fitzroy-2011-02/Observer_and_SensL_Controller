@@ -316,14 +316,20 @@ class Hardware:
             ULStat = "running"
             return ULStat
     
-    def readToMemory( self ):
+    def readToMemory( self, dataPointCounts = -1 ):
         """
+        param
+            dataPointCounts :   if we do not want to make a continuous meausrement, until
+                                the stop button is pressed
+                                we here can define a number of dataPoints that has to
+                                be aquired
+
         Check the status of the current background operation
         Parameters:
-            BoardNum  :the number used by CB.CFG to describe this board
-            Status    :current status of the operation (IDLE or RUNNING)
-            CurCount  :current number of samples collected
-            CurIndex  :index to the last data value transferred 
+            BoardNum    :the number used by CB.CFG to describe this board
+            Status      :current status of the operation (IDLE or RUNNING)
+            CurCount    :current number of samples collected
+            CurIndex    :index to the last data value transferred 
             FunctionType: A/D operation (AIFUNCTIOM)
         """
         self.memHandle =  meDLL.cbWinBufAlloc(MAX_COUNT_FOR_CONT_SCAN)  # reserve some memory
@@ -363,6 +369,19 @@ class Hardware:
                 
                 self.sumSignalArray.append(sumSig)
                 
+                # lets count down if we are using non continuous mode (dataPointCounts != -1)
+                if( dataPointCounts < -1 ):
+                    
+                    # decrement index
+                    dataPointCounts = dataPointCounts - 1
+                    
+                    # check if we aquired all points
+                    if( dataPointCounts > 0 ):
+                        dataPointCounts = dataPointCounts - 1
+                    else:
+                        self.stopSignalCollection.set()
+                        return "Sensor collection finished"
+            
                 # wait a short time for other actions
                 time.sleep(0.01)
             

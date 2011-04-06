@@ -338,7 +338,7 @@ def startSensLZStapel():
         fileObj = open( fileNameURL, "w")
         
         # add labelline
-        labelLine = "z step with z dist: " + str(zDist) + ", mean signal from Exp Time: " + str(zExpTime)
+        labelLine = "\"z step with z dist: " + str(zDist) + "\", \"mean signal from Exp Time: " + str(zExpTime) + "\""
         fileObj.write(labelLine + "\n")
         
         k = 0

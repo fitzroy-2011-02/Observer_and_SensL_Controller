@@ -509,6 +509,9 @@ $(document).ready(function() {
 						},
 						'json'
 			);
+            // change ext of the button
+			$("#startSensLZStapelBUT").toggleClass("startSensLZStapelBUT_select");
+			$("#startSensLZStapelBUT").html("START");
 		}
 		
 		

@@ -222,7 +222,9 @@
 															START
 												</div>
 									</div>
-		
+								
+									<!--
+								
 									<div 	id="showResult">
 												<input 	id=		"inputPlotFileName"
 																value=""
@@ -233,18 +235,19 @@
 																CREATE HTML PAGE
 												</button>
 									</div>
+									-->
 									
 									<div 	id="startSensLZStapel">
 												<table 	id="startSensLZStapelTable">
 																<tr>
 																	<td class="sensorConfigTD">
-																		<div 	class="eleLabel">
+																		<div 	class="eleLabelZStapel">
 																					B.zeit [ms]
 																		</div>
 																	</td>
 																	<td	class="tdInput sensorConfigTD">
 																			<input 	value=""
-																							id=		"startSensLZStapelFrequenz"
+																							id=		"startSensLZStapelExpTime"
 																							type=	"text"
 																							class="inputEle">
 																			</input>
@@ -253,18 +256,49 @@
 																
 																<tr>
 																	<td class="sensorConfigTD">
-																		<div 	class="eleLabel">
-																					Z Weg [um]
+																		<div 	class="eleLabelZStapel">
+																					Anzahl der Aufnahmen
 																		</div>
 																	</td>
 																	<td	class="tdInput sensorConfigTD">
 																			<input 	value=""
-																							id=		"startSensLZStapelZWeg"
+																							id=		"startSensLZStapelExpCount"
 																							type=	"text"
 																							class="inputEle">
 																			</input>
 																	</td>
-																</tr>																									
+																</tr>
+																
+																<tr>
+																	<td class="sensorConfigTD">
+																		<div 	class="eleLabelZStapel">
+																					Z Schritte 
+																		</div>
+																	</td>
+																	<td	class="tdInput sensorConfigTD">
+																			<input 	value=""
+																							id=		"startSensLZStapelStepCount"
+																							type=	"text"
+																							class="inputEle">
+																			</input>
+																	</td>
+																</tr>
+																
+																<tr>
+																	<td class="sensorConfigTD">
+																		<div 	class="eleLabelZStapel">
+																					Z Schrittweite [um]
+																		</div>
+																	</td>
+																	<td	class="tdInput sensorConfigTD">
+																			<input 	value=""
+																							id=		"startSensLZStapelStepDist"
+																							type=	"text"
+																							class="inputEle">
+																			</input>
+																	</td>
+																</tr>		
+																
 												</table>
 												<div 	id=		"startSensLZStapelBUT"
 															class="sensLOFF">
@@ -275,10 +309,6 @@
 						</div>
 					</div>
 			</div>
-
-			
-			
-			
 			
     </body>
 </html>

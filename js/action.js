@@ -25,6 +25,7 @@ $(document).ready(function() {
 	$("#startSensL").corner("5px");
 	$("#startSensLZStapel").corner("5px");
 	$("#startSensLZStapelBUT").corner("5px");
+	$(".eleLabelZStapel").corner("3px");
 	
 	// set default input values
 	$("#inputFrequenz").val("100");
@@ -37,11 +38,10 @@ $(document).ready(function() {
 	$("#startSensLFrequenz").val("100");
 	$("#startSensLFileName").val("testSensor");
 	
-	$("#startSensLZStapelZWeg").val("10");
-	$("#startSensLZStapelFrequenz").val("1000");
-	
-	
-	
+	$("#startSensLZStapelExpTime").val("100");
+	$("#startSensLZStapelExpCount").val("100");
+	$("#startSensLZStapelStepCount").val("10");
+	$("#startSensLZStapelStepDist").val("100");
 	
 	
 	/* ----------------------------------
@@ -52,8 +52,8 @@ $(document).ready(function() {
 		$.post('/cCOM',
 			{ "comPort":"0" },
 			function(res) {
-				res.resMic = 1;
-				res.resSAPD = 1; 
+				// res.resMic = 1;
+				// res.resSAPD = 1; 
 				if( (res.resMic != "0") && (res.resSAPD != "0" ))
 				{
 					// now show the controll elements
@@ -432,12 +432,12 @@ $(document).ready(function() {
 			$("#startSensLBUT").toggleClass("startSensLBUT_select");
 			$("#startSensLBUT").html("STOP");
 			
-			// get filename and rate
-			rate = 	$("#startSensLFrequenz").val();
+			// get exposure time
+			expTime = 	$("#startSensLFrequenz").val();
 			
 			writeLog( "Start SensL APD", "input" );
 			$.post('/startSensLAPD',
-						{ "rate": rate},
+						{ "expTime": expTime},
 						function(res)
 						{
 							logLine = "Start SensL APD returns: " + res.res;
@@ -465,7 +465,8 @@ $(document).ready(function() {
 	// -------------------------------------------------------
 	
 	/* ------------------------------------------------------
-	call python: 	move z axes to find focus position
+	call python: 	move z axes to find focus position and
+								generate plot
 	------------------------------------------------------ */
 	$("##startSensLZStapelBUT").bind("click", function()
 	{
@@ -483,17 +484,28 @@ $(document).ready(function() {
 			$("#startSensLZStapelBUT").html("STOP");
 			
 			// get parameter
-			zdist = 	$("#startSensLZStapelZWeg").val();
-			expTime = $("#startSensLZStapelFrequenz").val();
+			
+			zStepCount = 	$("#startSensLZStapelStepCount").val();
+			zStepDist = 	$("#startSensLZStapelStepDist").val();
+			expTime = 		$("#startSensLZStapelExpTime").val();
+			expCount = 		$("#startSensLZStapelExpCount").val();
 			
 			writeLog( "Start search Z focus", "input" );
 			$.post('/startSensLZStapel',
-						{ "zdist": 	zdist,
-							"expTime":expTime },
+						{	"zcount":		zStepCount,
+							"zdist": 		zdist,
+							"expTime":	expTime,
+							"expCount":	expCount
+						},							
 						function(res)
 						{
 							logLine = "Start search Z focus returns: " + res.res;
-							writeLog(logLine, "output" );
+              writeLog( logLine , "output" );
+							if( res.error == "0" )
+							{
+									htmlPageURL = res.res;
+									window.open( htmlPageURL,'_newtab' )
+							}
 						},
 						'json'
 			);

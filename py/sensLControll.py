@@ -319,7 +319,7 @@ class Hardware:
     def readToMemory( self, dataPointCounts = -1 ):
         """
         param
-            dataPointCounts :   if we do not want to make a continuous meausrement, until
+            dataPointCounts:    if we do not want to make a continuous meausrement, until
                                 the stop button is pressed
                                 we here can define a number of dataPoints that has to
                                 be aquired
@@ -332,6 +332,10 @@ class Hardware:
             CurIndex    :index to the last data value transferred 
             FunctionType: A/D operation (AIFUNCTIOM)
         """
+        # reset thread Events
+        sensLAPD.stopSignalCollection.clear()
+        sensLAPD.signalCollectionFinished.clear()
+        
         self.memHandle =  meDLL.cbWinBufAlloc(MAX_COUNT_FOR_CONT_SCAN)  # reserve some memory
                                                                         # returns a int value
                                                                          
@@ -370,7 +374,7 @@ class Hardware:
                 self.sumSignalArray.append(sumSig)
                 
                 # lets count down if we are using non continuous mode (dataPointCounts != -1)
-                if( dataPointCounts < -1 ):
+                if( dataPointCounts > -1 ):
                     
                     # decrement index
                     dataPointCounts = dataPointCounts - 1
@@ -379,8 +383,25 @@ class Hardware:
                     if( dataPointCounts > 0 ):
                         dataPointCounts = dataPointCounts - 1
                     else:
+                        # do not set stopSignalCollection here because in the stopReadToMemory
+                        # function we call this event must not be set to go through
+                        # so normally the stopReadToMemory function is called in an own
+                        # thread to cancel this thread - in this scenario we just call the
+                        # function in the same thread because we cancel this thread now -
+                        # this dataPointCounts stuff was added later, so this is very, very
+                        # dirty :)
+                        
+                        # we now do it another way, do not call the stopReadToMemory function
+                        # beacause we write a new wirte to file function 
                         self.stopSignalCollection.set()
-                        return "Sensor collection finished"
+                        self.signalCollectionFinished.set()
+                        
+                        # free buffer
+                        meDLL.cbWinBufFree( self.memHandle )
+                        
+                        # just return collected data
+                        res = self.sumSignalArray
+                        return res
             
                 # wait a short time for other actions
                 time.sleep(0.01)
@@ -472,7 +493,7 @@ class Hardware:
                     returnValue = (0, newFileName)
                                     
             else:
-                returnValue = (1, "An eroro in the Sensor function calls occured")
+                returnValue = (1, "An error in the Sensor function calls occured")
  
             return returnValue
         
@@ -480,6 +501,7 @@ class Hardware:
         else:
             returnVal = (1, "Nothing to stop. Sensor is not running.")
             return returnVal
+
 
     def readDataFile( self, fileName, firstPoint = 1, numPoints = 0 ):
       '''

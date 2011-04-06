@@ -231,7 +231,7 @@ def callCMD():
 
 @route('/startSensLAPD', method = "POST")
 def startSensLAPD():
-    rate = request.POST['rate']
+    expTime = request.POST['expTime']
     
     # set the data acquisition time [ms]
     # cause of a lack of thinking ability this variable
@@ -244,7 +244,7 @@ def startSensLAPD():
     # 50 000 Hz = 50 signals/ms
     # have to double the count because for a reason I do not know every 2'nd
     # signal is 32768 ?? I leave these alone
-    countNumber = int(rate) * 50 * 2
+    countNumber = int(expTime) * 50 * 2
     
     # I also have to calculate the max value of the range option, from
     # chart drawing
@@ -262,6 +262,102 @@ def startSensLAPD():
     res = "Get Signal Thread gestartet."
     return {"res": res}
 
+@route('/startSensLZStapel', method = 'POST')
+def startSensLZStapel():
+    # there is no use of threads in this function, so you have to wait until
+    # it's finished :) -quick and dirty
+    
+    # here we want to find the focus position for the z axes
+    # we start at the current z position and going up the number, dist
+    # of given steps and aquire given number of signals for the given time
+    zCount =    int( request.POST['zcount'] )         # number of steps
+    zDist =     int( request.POST['zdist'] )          # step width [um]
+    zExpTime =  int( request.POST['expTime'] )        # exposure time [ms]
+    zExpCount = int( request.POST['expCount'] )       # number of exposures
+    
+    # we need a 2D array to save the results
+    # one dimension for each z step
+    # one dimension for for the signal array related to the step
+    focusSignals = []
+    # here we save the calculated mean values
+    focusMeanSignals = []
+    
+    # description see startSensLAPD function
+    countNumber = zExpTime * 50 * 2
+    sensLAPD.counts = ctypes.c_long(int(countNumber))
+    
+    # instruction we send to the mikroscope z axes to move it
+    moveString = "R Z=" + str(zDist)
+    
+    # we need a filename
+    filename =      "zSearch"
+    fileNameURL =   pathToCSV + filename + ".csv"
+    
+    counter = 0
+    while( os.path.exists( fileNameURL ) == True ):
+        # we insert a counter
+        newFileName = filename + "_" + str(counter)
+        fileNameURL = filenamePath + str(newFileName) + ".csv" 
+        counter = counter + 1
+    
+    if counter != 0:
+        htmlFileName = pathToHTMLPage + newFileName + ".html"
+    else:
+        htmlFileName = pathToHTMLPage + filename + ".html"
+    
+    # we make a series of "pictures" add the current z position
+    zStepSignalArrary = sensLAPD.readToMemory(zExpCount)
+    focusSignals.append(zStepSignalArrary)
+    
+    # for each step we make 
+    for zstep in xrange(len(zCount)):
+        
+        # we go up by given dist
+        mvRes = mik.observerDevice.Call( moveString )
+        
+        # we make a series of "pictures" at the current z position
+        zStepSignalArrary = sensLAPD.readToMemory(zExpCount)
+        focusSignals.append(zStepSignalArrary)
+    
+    # so first we calc the mean values
+    meanSig = 0
+    for signalStepArray in xrange( len(zStepSignalArrary) ):
+        meanSig = 0
+        for signal in xrange( len(zStepSignalArrary[signalStepArray]) ):
+            meanSig = meanSig + zStepSignalArrary[signalStepArray][signal]
+            
+        meanSig = meanSig / len( zStepSignalArrary[signalStepArray] )
+        
+        focusMeanSignals.append(meanSig)
+    try:         
+        # now we have to save the result in a csv
+        # we jsut save the mean values
+        fileObj = open( fileNameURL, "w")
+        
+        # add labelline
+        labelLine = "z step with z dist: " + str(zDist) + ", mean signal from Exp Time: " + str(zExpTime)
+        fileObj.write(labelLine + "\n")
+        
+        k = 0
+        for meanSig in xrange( len(focusMeanSignals) ):
+            dataLine = str(k) + "," + str(focusMeanSignals[meanSig]) + "\n"
+            fileObj.write(dataLine)
+            k = k + 1
+        fileObj.close()
+        
+        # and last but not least generate the html page
+        htmlPageURL = generateHTMLPage( fileNameURL, htmlFileName, labelLine)
+        
+        return { "error": "0",
+                 "res": htmlFileURL}
+        
+    except Exception, e:
+        returnValue = "Python error: " + str(e)
+        return { "error": "1",
+                 "res": returnValue }        
+    
+    
+    
 @route('/stopSensLAPD', method = 'POST')
 def stopSensLAPD():
     fileName = request.POST['fileName']
@@ -283,8 +379,6 @@ def stopSensLAPD():
         csvFileNameURL = pathToCSV + res[1] + ".csv"
         htmlFileName = pathToHTMLPage + res[1] + ".html"
         
-        print htmlFileName
-        
         htmlFileURL = generateHTMLPage( csvFileNameURL, htmlFileName )
         
         return { "error": "0",
@@ -294,7 +388,6 @@ def stopSensLAPD():
         return { "error": "1",
                  "res": res[1]}
         
-    
 @route('/showResult', method = "POST")
 def showScanResult():
     # we generate a new html page with the plot of the csv file
@@ -308,7 +401,7 @@ def showScanResult():
     
     return {"res": htmlPageURL}
     
-def generateHTMLPage( csvFileNameURL, htmlFileName ):
+def generateHTMLPage( csvFileNameURL, htmlFileName, labelStr = "\"time\", \"signal\", \"mean\"" ):
     #print csvFileNameURL
     #print htmlFileName
     
@@ -348,7 +441,7 @@ def generateHTMLPage( csvFileNameURL, htmlFileName ):
                           document.getElementById("graphDIV"),
                           [""") + dataContent  + str("""], // path to CSV file
                           {valueRange:[-750, """ + str(maxRange) + """ ],
-                          labels:["time", "signal", "mean"] }                                    // options
+                          labels:[""" + labelString + """] }                                    // options
                         );
                     </script>
                     </body>

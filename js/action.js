@@ -39,8 +39,8 @@ $(document).ready(function() {
 	$("#startSensLFileName").val("testSensor");
 	
 	$("#startSensLZStapelExpTime").val("100");
-	$("#startSensLZStapelExpCount").val("100");
-	$("#startSensLZStapelStepCount").val("10");
+	$("#startSensLZStapelExpCount").val("10");
+	$("#startSensLZStapelStepCount").val("1");
 	$("#startSensLZStapelStepDist").val("100");
 	
 	
@@ -468,7 +468,7 @@ $(document).ready(function() {
 	call python: 	move z axes to find focus position and
 								generate plot
 	------------------------------------------------------ */
-	$("##startSensLZStapelBUT").bind("click", function()
+	$("#startSensLZStapelBUT").bind("click", function()
 	{
 		
 		// stop search
@@ -492,8 +492,8 @@ $(document).ready(function() {
 			
 			writeLog( "Start search Z focus", "input" );
 			$.post('/startSensLZStapel',
-						{	"zcount":		zStepCount,
-							"zdist": 		zdist,
+						{	"zcount":	zStepCount,
+							"zdist": 	zStepDist,
 							"expTime":	expTime,
 							"expCount":	expCount
 						},							

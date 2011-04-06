@@ -285,6 +285,9 @@ def startSensLZStapel():
     # description see startSensLAPD function
     countNumber = zExpTime * 50 * 2
     sensLAPD.counts = ctypes.c_long(int(countNumber))
+
+    global maxRange
+    maxRange = 32768 * countNumber / 2    
     
     # instruction we send to the mikroscope z axes to move it
     moveString = "R Z=" + str(zDist)
@@ -297,7 +300,7 @@ def startSensLZStapel():
     while( os.path.exists( fileNameURL ) == True ):
         # we insert a counter
         newFileName = filename + "_" + str(counter)
-        fileNameURL = filenamePath + str(newFileName) + ".csv" 
+        fileNameURL = pathToCSV + newFileName + ".csv" 
         counter = counter + 1
     
     if counter != 0:
@@ -310,7 +313,7 @@ def startSensLZStapel():
     focusSignals.append(zStepSignalArrary)
     
     # for each step we make 
-    for zstep in xrange(len(zCount)):
+    for zstep in xrange(zCount):
         
         # we go up by given dist
         mvRes = mik.observerDevice.Call( moveString )
@@ -321,12 +324,12 @@ def startSensLZStapel():
     
     # so first we calc the mean values
     meanSig = 0
-    for signalStepArray in xrange( len(zStepSignalArrary) ):
+    for signalStepArray in xrange( len(focusSignals) ):
         meanSig = 0
-        for signal in xrange( len(zStepSignalArrary[signalStepArray]) ):
-            meanSig = meanSig + zStepSignalArrary[signalStepArray][signal]
+        for signal in xrange( len(focusSignals[signalStepArray]) ):
+            meanSig = meanSig + focusSignals[signalStepArray][signal]
             
-        meanSig = meanSig / len( zStepSignalArrary[signalStepArray] )
+        meanSig = meanSig / len( focusSignals[signalStepArray] )
         
         focusMeanSignals.append(meanSig)
     try:         
@@ -349,7 +352,7 @@ def startSensLZStapel():
         htmlPageURL = generateHTMLPage( fileNameURL, htmlFileName, labelLine)
         
         return { "error": "0",
-                 "res": htmlFileURL}
+                 "res": htmlPageURL}
         
     except Exception, e:
         returnValue = "Python error: " + str(e)
@@ -401,7 +404,7 @@ def showScanResult():
     
     return {"res": htmlPageURL}
     
-def generateHTMLPage( csvFileNameURL, htmlFileName, labelStr = "\"time\", \"signal\", \"mean\"" ):
+def generateHTMLPage( csvFileNameURL, htmlFileName, labelString = "\"time\", \"signal\", \"mean\"" ):
     #print csvFileNameURL
     #print htmlFileName
     

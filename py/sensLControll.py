@@ -333,8 +333,8 @@ class Hardware:
             FunctionType: A/D operation (AIFUNCTIOM)
         """
         # reset thread Events
-        sensLAPD.stopSignalCollection.clear()
-        sensLAPD.signalCollectionFinished.clear()
+        self.stopSignalCollection.clear()
+        self.signalCollectionFinished.clear()
         
         self.memHandle =  meDLL.cbWinBufAlloc(MAX_COUNT_FOR_CONT_SCAN)  # reserve some memory
                                                                         # returns a int value

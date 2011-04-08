@@ -139,7 +139,7 @@ $(document).ready(function() {
 				
 				writeLog( "Start SensL APD", "input" );
 				$.post('/startSensLAPD',
-							{ "rate": rate},
+							{ "expTime": rate},
 							function(res)
 							{
 								logLine = "Start SensL APD returns: " + res.res;

@@ -104,13 +104,13 @@ class executeCmd( threading.Thread ):
 # __________________________ in this class we handle the sensL START command
 class startReadToMemory( threading.Thread ):
     # Override Thread's __init__ method to accept the parameters needed:
-    def __init__ ( self, expCount, fileName ):
+    def __init__ ( self, expCount = -1, fileName = ""):
         self.expCount = expCount
         self.fileName = fileName
         threading.Thread.__init__ ( self )
 
     def run( self ):
-        res = sensLAPD.readToMemory( expCount, fileName )
+        res = sensLAPD.readToMemory( self.expCount, self.fileName )
         # do not read queue value so do not put result of start proces in there
         # sensLQueue.put( res )
 # __________________________________________________________________________ 
@@ -250,8 +250,9 @@ def startSensLAPD():
     
     # I also have to calculate the max value of the range option, from
     # chart drawing
+    # do not this anymore because I take the mean value
     global maxRange
-    maxRange = 32768 * countNumber
+    maxRange = 32768
     
     sensLAPD.counts = ctypes.c_long(int(countNumber))
     startSensLThread = startReadToMemory()

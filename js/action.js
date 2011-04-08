@@ -131,11 +131,13 @@ $(document).ready(function() {
 			if( $("#sensLSelectBUT_ON").hasClass("sensLSelectBUT_check") )
 			{
 				// get filename and rate
-				rate = 	$("#inputExpTime").val();
+				expTime = 	$("#inputExpTime").val();
 				
 				writeLog( "Start SensL APD", "input" );
 				$.post('/startSensLAPD',
-							{ "expTime": rate},
+							{ "expTime": expTime,
+                              "expCount": "-1",
+                              "fileName": ""},
 							function(res)
 							{
 								logLine = "Start SensL APD returns: " + res.res;
@@ -431,7 +433,7 @@ $(document).ready(function() {
 			// get exposure time, exposure count, and filename (needed if we use exposure count
 			// option)
 			expTime = 	$("#startSensLExpTime").val();
-			expCount =	$("#startSensLExpCount").val();
+			expCount =	"-1";
 			fileName =  $("#startSensLFileName").val();
 			
 			writeLog( "Start SensL APD", "input" );

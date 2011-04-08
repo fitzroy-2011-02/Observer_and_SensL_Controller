@@ -365,10 +365,14 @@ class Hardware:
                 arrayData = (ctypes.c_ushort * signalNumber)()
                 conversionStat = meDLL.cbWinBufToArray( self.memHandle, ctypes.byref(arrayData), 0, self.counts.value )
                 
-                sumSig = 0                
-                for i in xrange( 0, signalNumber, 2 ):
+                sumSig = 0.0                
+                for i in xrange( signalNumber ):
                     sumSig = sumSig + NULL_VALUE - arrayData[i]
                     #print arrayData[i]
+
+                # now take the mean value, so we do not get such high values       
+                sumSig = sumSig / signalNumber
+                # print("%10.3f", sumSig)
                 
                 self.sumSignalArray.append(sumSig)
                 
@@ -433,7 +437,7 @@ class Hardware:
         if( self.stopSignalCollection.isSet() == 0 ):        
             # stop process
             #ULStatStopBackground = meDLL.cbStopBackground ( self.deviceNr )
-            
+                        
             # set the event to stop collecting signals
             self.stopSignalCollection.set()
             
@@ -473,7 +477,8 @@ class Hardware:
                 k = 0
                 for i in xrange( len(self.sumSignalArray) ):
                   #dataLine = str(i) + "," + str(self.dataArray[i]) +"\n"
-                  dataLine = str(k) + "," + str(self.sumSignalArray[i]) + "," + str(meanSig) + "\n"
+                  signal = "%10.4f" % self.sumSignalArray[i]
+                  dataLine = str(k) + "," + signal + "," + str(meanSig) + "\n"
                   fileObj.write(dataLine)
                   k = k + 1
                 fileObj.close()

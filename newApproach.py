@@ -104,11 +104,13 @@ class executeCmd( threading.Thread ):
 # __________________________ in this class we handle the sensL START command
 class startReadToMemory( threading.Thread ):
     # Override Thread's __init__ method to accept the parameters needed:
-    def __init__ ( self ):
+    def __init__ ( self, expCount, fileName ):
+        self.expCount = expCount
+        self.fileName = fileName
         threading.Thread.__init__ ( self )
 
     def run( self ):
-        res = sensLAPD.readToMemory()
+        res = sensLAPD.readToMemory( expCount, fileName )
         # do not read queue value so do not put result of start proces in there
         # sensLQueue.put( res )
 # __________________________________________________________________________ 
@@ -231,7 +233,9 @@ def callCMD():
 
 @route('/startSensLAPD', method = "POST")
 def startSensLAPD():
-    expTime = request.POST['expTime']
+    expTime =   request.POST['expTime']
+    expCount =  request.POST['expCount']
+    fileName =  request.POST['fileName']
     
     # set the data acquisition time [ms]
     # cause of a lack of thinking ability this variable
@@ -242,22 +246,19 @@ def startSensLAPD():
     # so this means we have to calculate how many signals we have
     # to accumulate so we get the desired acquisition time
     # 50 000 Hz = 50 signals/ms
-    # have to double the count because for a reason I do not know every 2'nd
-    # signal is 32768 ?? I leave these alone
-    countNumber = int(expTime) * 50 * 2
+    countNumber = int(expTime) * 50
     
     # I also have to calculate the max value of the range option, from
     # chart drawing
-    # so max would be (have to divide by 2? look a few lines above)
     global maxRange
-    maxRange = 32768 * countNumber / 2
+    maxRange = 32768 * countNumber
     
     sensLAPD.counts = ctypes.c_long(int(countNumber))
     startSensLThread = startReadToMemory()
     startSensLThread.start()
     
     # can't wait for result because thread is running until we end it
-    # no result will be available - program is would stuck here
+    # no result will be available - program would stuck here
     # res = sensLQueue.get()
     res = "Get Signal Thread gestartet."
     return {"res": res}

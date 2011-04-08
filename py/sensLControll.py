@@ -115,6 +115,8 @@ CURRENTREVNUM =     6.10
 # one of my definitions
 MAX_COUNT_FOR_CONT_SCAN = ctypes.c_long(500000) # max number of signals we are able to
                                                 # acquire in one run
+                                                # this value means we are able to expose for
+                                                # 10 s (1s = 50 000 = sample_rate)
 
 SAMPLE_RATE =       50000                       # max sample rate availabel with the A/D converter
 
@@ -130,7 +132,7 @@ class Hardware:
     Functionality to control Meilhaus I/O-Card
     '''
     
-    def __init__( self, boardNumber = 0, lowChan = 0, highChan = 1, counts = 50, rate = SAMPLE_RATE,  fileNamePath = ".\\data\\raw\\" ):
+    def __init__( self, boardNumber = 0, lowChan = 0, highChan = 0, counts = 50, rate = SAMPLE_RATE,  fileNamePath = ".\\data\\raw\\" ):
         '''
         Initialize meilhaus class
 
@@ -143,9 +145,7 @@ class Hardware:
         
         self.lowChan =  ctypes.c_short(lowChan)     # first input chanel we scan 
         self.highChan = ctypes.c_short(highChan)    # last input chanel we scan
-        self.counts =   ctypes.c_long(counts)       # number of measurements - we are using
-                                                    # continuous option so ?
-                                                    # seems to be, that it has to be a multiple of 31
+        self.counts =   ctypes.c_long(counts)       # number of measurements - we are using (aquire time)
                                                     
         self.rate =     ctypes.c_long(rate)         # frequency of measurement [Hz] 
         
@@ -316,7 +316,7 @@ class Hardware:
             ULStat = "running"
             return ULStat
     
-    def readToMemory( self, dataPointCounts = -1 ):
+    def readToMemory( self, dataPointCounts = -1, fileName = "" ):
         """
         param
             dataPointCounts:    if we do not want to make a continuous meausrement, until
@@ -365,8 +365,7 @@ class Hardware:
                 arrayData = (ctypes.c_ushort * signalNumber)()
                 conversionStat = meDLL.cbWinBufToArray( self.memHandle, ctypes.byref(arrayData), 0, self.counts.value )
                 
-                
-                sumSig = 0
+                sumSig = 0                
                 for i in xrange( 0, signalNumber, 2 ):
                     sumSig = sumSig + NULL_VALUE - arrayData[i]
                     #print arrayData[i]
@@ -393,14 +392,17 @@ class Hardware:
                         
                         # we now do it another way, do not call the stopReadToMemory function
                         # beacause we write a new wirte to file function 
-                        self.stopSignalCollection.set()
+                        # self.stopSignalCollection.set()
                         self.signalCollectionFinished.set()
                         
-                        # free buffer
-                        meDLL.cbWinBufFree( self.memHandle )
+                        # call the stop thread
+                        self.stopReadToMemory( fileName )
                         
-                        # just return collected data
-                        res = self.sumSignalArray
+                        # free buffer
+                        # meDLL.cbWinBufFree( self.memHandle )
+                        
+                        # and get out of here
+                        res = "Sensor collection finished"
                         return res
             
                 # wait a short time for other actions

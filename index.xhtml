@@ -1,6 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus SVG 1.1//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
 	<head>
+		
+		
 		<script type="text/javascript" src="./js/jquery-1.4.4.js"></script>
 		<script type="text/javascript" src="./js/jquery.alphanumeric.js"></script>
 		<script type="text/javascript" src="./js/jquery.corner.js"></script>
@@ -10,9 +12,11 @@
 		
 		<script type="text/javascript" src="./js/dygraph.js"></script>
 		
-		<!-- here is my css and js code -->
-		<script type="text/javascript" src="./js/action.js" language="javascript"></script>
+		<!-- here is my css -->
 		<link rel="stylesheet" type="text/css" href="./css/myStyle.css"></link>
+		
+		<!-- here is my js code -->
+		<script type="text/javascript" src="./js/action.js" language="javascript"></script>
 		
 	</head>
     <body>
@@ -67,7 +71,7 @@
 																	<td
 																			class="tdInput sensorConfigTD">
 																			<input 	value=""
-																							id=		"inputFrequenz"
+																							id=		"inputExpTime"
 																							type=	"text"
 																							class="inputEle">
 																			</input>
@@ -195,7 +199,7 @@
 																	</td>
 																	<td	class="tdInput sensorConfigTD">
 																			<input 	value=""
-																							id=		"startSensLFrequenz"
+																							id=		"startSensLExpTime"
 																							type=	"text"
 																							class="inputEle">
 																			</input>
@@ -215,7 +219,28 @@
 																							class="inputFileName">
 																			</input>
 																	</td>
-																</tr>																									
+																</tr>
+																
+																<!-- this is an optional parameter, if set
+																we do not wait until user presses stop we get a
+																given number of signals 
+																
+																<tr>
+																	<td class="sensorConfigTD">
+																		<div 	class="eleLabel">
+																					Signalanzahl
+																		</div>
+																	</td>
+																	<td	class="tdInput sensorConfigTD">
+																			<input 	value=""
+																							id=		"startSensLExpCount"
+																							type=	"text"
+																							class="inputEle">
+																			</input>
+																	</td>
+																</tr>
+																not finished yet 
+																-->
 												</table>
 												<div 	id=		"startSensLBUT"
 															class="sensLOFF">
@@ -223,7 +248,7 @@
 												</div>
 									</div>
 								
-									<!--
+									<!-- here we thought we could control the z-axis, but it is not possible
 								
 									<div 	id="showResult">
 												<input 	id=		"inputPlotFileName"
@@ -235,7 +260,7 @@
 																CREATE HTML PAGE
 												</button>
 									</div>
-									-->
+									
 									
 									<div 	id="startSensLZStapel">
 												<table 	id="startSensLZStapelTable">
@@ -305,7 +330,7 @@
 															START
 												</div>
 									</div>									
-						
+									-->
 						</div>
 					</div>
 			</div>

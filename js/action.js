@@ -28,20 +28,16 @@ $(document).ready(function() {
 	$(".eleLabelZStapel").corner("3px");
 	
 	// set default input values
-	$("#inputFrequenz").val("100");
+	$("#inputExpTime").val("100");
 	$("#inputFileName").val("testLauf");
 	
 	$("#inputVel").val("6.43");
 	$("#inputDist").val("700");
 	$("#inputCycle").val("1");
 	
-	$("#startSensLFrequenz").val("100");
+	$("#startSensLExpTime").val("100");
 	$("#startSensLFileName").val("testSensor");
-	
-	$("#startSensLZStapelExpTime").val("100");
-	$("#startSensLZStapelExpCount").val("10");
-	$("#startSensLZStapelStepCount").val("1");
-	$("#startSensLZStapelStepDist").val("100");
+	$("#startSensLExpCount").val("-1");
 	
 	
 	/* ----------------------------------
@@ -52,7 +48,7 @@ $(document).ready(function() {
 		$.post('/cCOM',
 			{ "comPort":"0" },
 			function(res) {
-				// res.resMic = 1;
+				 res.resMic = 1;
 				// res.resSAPD = 1; 
 				if( (res.resMic != "0") && (res.resSAPD != "0" ))
 				{
@@ -135,7 +131,7 @@ $(document).ready(function() {
 			if( $("#sensLSelectBUT_ON").hasClass("sensLSelectBUT_check") )
 			{
 				// get filename and rate
-				rate = 	$("#inputFrequenz").val();
+				rate = 	$("#inputExpTime").val();
 				
 				writeLog( "Start SensL APD", "input" );
 				$.post('/startSensLAPD',
@@ -432,12 +428,17 @@ $(document).ready(function() {
 			$("#startSensLBUT").toggleClass("startSensLBUT_select");
 			$("#startSensLBUT").html("STOP");
 			
-			// get exposure time
-			expTime = 	$("#startSensLFrequenz").val();
+			// get exposure time, exposure count, and filename (needed if we use exposure count
+			// option)
+			expTime = 	$("#startSensLExpTime").val();
+			expCount =	$("#startSensLExpCount").val();
+			fileName =  $("#startSensLFileName").val();
 			
 			writeLog( "Start SensL APD", "input" );
 			$.post('/startSensLAPD',
-						{ "expTime": expTime},
+						{ "expTime": expTime,
+						"expCount": expCount,
+						"fileName": fileName},
 						function(res)
 						{
 							logLine = "Start SensL APD returns: " + res.res;
